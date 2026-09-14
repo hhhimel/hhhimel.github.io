@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("https://fonts.gstatic.com/s/fraunces/v33/6NUh8FyLNQOQZAnv9bYE0fSJXcYr7Ycvsn0Ff.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* ── Field Log palette ── */
+  --color-paper: #EDEADE;
+  --color-paper-dim: #E3DFCF;
+  --color-ink: #2B2A22;
+  --color-ink-soft: #55523F;
+  --color-moss: #5C6B3F;
+  --color-moss-dark: #47522F;
+  --color-rust: #A65B34;
+  --color-rule: #C7C0A8;
+
+  --color-soil: #1E2016;
+  --color-soil-dim: #262918;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  color-scheme: light;
+}
+
+html.dark {
+  background: var(--color-soil);
+  color: var(--color-paper);
+  color-scheme: dark;
+}
+
+body {
+  font-optical-sizing: auto;
+}
+
+/* Notebook margin rule — the one recurring structural device */
+.margin-rule {
+  border-left: 1.5px solid var(--color-rule);
+}
+html.dark .margin-rule {
+  border-left-color: #3A3E29;
+}
+
+/* Underline-draw, the single load animation */
+.ink-underline {
+  position: relative;
+  display: inline-block;
+}
+.ink-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-moss);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: draw-in 0.7s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-underline::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+@keyframes draw-in {
+  to { transform: scaleX(1); }
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-rust);
+  outline-offset: 2px;
+}
+
+/* Prose (post body) */
+.prose-field {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  max-width: 68ch;
+}
+.prose-field p { margin: 1.1em 0; }
+.prose-field h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin: 1.8em 0 0.6em;
+}
+.prose-field h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin: 1.5em 0 0.5em;
+}
+.prose-field a {
+  color: var(--color-moss-dark);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule);
+  text-underline-offset: 3px;
+}
+html.dark .prose-field a { color: #A9C285; }
+.prose-field code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-paper-dim);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+html.dark .prose-field code { background: var(--color-soil-dim); }
+.prose-field pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 4px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  line-height: 1.6;
+}
+.prose-field pre code { background: none; padding: 0; }
+.prose-field blockquote {
+  border-left: 2px solid var(--color-rust);
+  padding-left: 1rem;
+  color: var(--color-ink-soft);
+  font-style: italic;
+}
+.prose-field ul, .prose-field ol {
+  margin: 1em 0;
+  padding-left: 1.4em;
+}
+.prose-field li { margin: 0.35em 0; }
+.prose-field img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin: 1.5em 0;
+}
