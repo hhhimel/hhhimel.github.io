@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Himel</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <h1>Himel · Admin</h1>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a href="../index.html" class="btn btn-sm btn-ghost" style="color:var(--cream);border-color:var(--line-dark)">← Public site</a>
+    <button class="btn btn-sm btn-ghost" id="lockBtn" style="color:var(--cream);border-color:var(--line-dark)">Lock</button>
+  </div>
+</header>
+
+<div id="adminGate" class="admin-gate">
+  <div class="logo-mark" style="margin:0 auto 16px;width:48px;height:48px">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="12" fill="#1A2E22"/>
+      <path d="M18 48c3-14 10-24 20-28-3 14-8 24-20 28z" stroke="#C4A35A" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="28" cy="30" r="3.5" fill="#8B5E3C"/>
+      <circle cx="34" cy="22" r="3" fill="#8B5E3C"/>
+      <circle cx="38" cy="14" r="2.5" fill="#8B5E3C"/>
+    </svg>
+  </div>
+  <h2 style="font-size:1.3rem;margin-bottom:8px">Admin access</h2>
+  <p class="muted" style="font-size:0.9rem;margin-bottom:8px">Not linked from the public site.</p>
+  <input class="form-input" type="password" id="adminPass" placeholder="Passphrase" autocomplete="current-password">
+  <button class="btn btn-primary" id="unlockBtn" style="width:100%;margin-top:8px">Unlock</button>
+</div>
+
+<div id="adminPanel" style="display:none">
+  <main class="admin-main">
+
+    <!-- BACKUP -->
+    <div class="admin-card">
+      <h2>Backup & restore</h2>
+      <p class="muted" style="font-size:0.88rem;margin-bottom:14px">
+        Download a JSON backup (works offline). Restore on any device by importing the same file.
+        Recommended before every cloud push or device change.
+      </p>
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;margin-bottom:12px">
+        <input type="checkbox" id="exportIncludeCV"> Include CV file in backup (larger file)
+      </label>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <button class="btn btn-primary" id="exportBtn">Download backup</button>
+        <label class="btn btn-outline" style="cursor:pointer;margin:0">
+          Import backup
+          <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+        </label>
+      </div>
+    </div>
+
+    <!-- CLOUD -->
+    <div class="admin-card">
+      <h2>Cloud sync (JSONBin — free)</h2>
+      <p class="muted" style="font-size:0.88rem;margin-bottom:12px;line-height:1.55">
+        So visitors on GitHub Pages see the same journal as you:
+        <br>1. Create a free account at <a href="https://jsonbin.io" target="_blank" rel="noopener" style="color:var(--rust);text-decoration:underline">jsonbin.io</a>
+        <br>2. Create a bin → copy <strong>Bin ID</strong> and <strong>Master Key</strong>
+        <br>3. Paste below → Save → <strong>Push to cloud</strong>
+        <br>Public site will load posts from the bin when enabled.
+      </p>
+      <div style="margin-bottom:10px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Bin ID</label>
+        <input class="form-input" id="cloud-binId" placeholder="e.g. 67abc123...">
+      </div>
+      <div style="margin-bottom:10px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Master API Key</label>
+        <input class="form-input" id="cloud-apiKey" type="password" placeholder="Stored only in this browser" autocomplete="off">
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;margin-bottom:14px">
+        <input type="checkbox" id="cloud-enabled"> Enable public site to read from this bin
+      </label>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button class="btn btn-primary" id="saveCloudBtn">Save cloud settings</button>
+        <button class="btn btn-outline" id="cloudPushBtn">Push to cloud</button>
+        <button class="btn btn-outline" id="cloudPullBtn">Pull from cloud</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="admin-card">
+      <h2>Basic customization</h2>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Display name</label>
+        <input class="form-input" id="set-siteName">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Role line</label>
+        <input class="form-input" id="set-roleLine">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">“Now” line</label>
+        <input class="form-input" id="set-nowLine">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Accent color</label>
+        <input class="form-input" id="set-accent" type="color" value="#C4A35A" style="height:42px;padding:4px">
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem">
+          <input type="checkbox" id="set-allowSuggest"> Allow public post suggestions
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem">
+          <input type="checkbox" id="set-showWeather" checked> Show weather
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem">
+          <input type="checkbox" id="set-showNews" checked> Show news
+        </label>
+      </div>
+      <button class="btn btn-primary" id="saveSettingsBtn">Save settings</button>
+    </div>
+
+    <!-- CV -->
+    <div class="admin-card">
+      <h2>CV / resume</h2>
+      <p class="muted" style="font-size:0.88rem;margin-bottom:12px">
+        A CV is already included at <code>assets/Himel_CV.pdf</code> (from your NGO/Bank version).
+        Upload here only if you want to replace it in this browser; for GitHub Pages, replace the file in <code>assets/</code>.
+      </p>
+      <input type="file" id="cvUpload" accept=".pdf,application/pdf" style="margin-bottom:12px;font-size:0.9rem">
+      <div id="cvStatus"></div>
+    </div>
+
+    <!-- NEW POST -->
+    <div class="admin-card">
+      <h2>New journal entry</h2>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Title</label>
+        <input class="form-input" id="np-title">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Type</label>
+        <select class="form-select" id="np-type">
+          <option value="learn">Learning note</option>
+          <option value="fix">Fix guide</option>
+          <option value="search">Search log</option>
+          <option value="note">Personal / field note</option>
+        </select>
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Excerpt</label>
+        <input class="form-input" id="np-excerpt">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Tags</label>
+        <input class="form-input" id="np-tags" placeholder="#genetics, #r">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Content</label>
+        <textarea class="form-textarea" id="np-content" style="min-height:140px"></textarea>
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Image URL</label>
+        <input class="form-input" id="np-image">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Or upload image (max 1.5 MB)</label>
+        <input type="file" id="np-imageFile" accept="image/*" style="font-size:0.9rem">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-family:var(--mono);font-size:0.74rem;color:var(--muted)">Video URL</label>
+        <input class="form-input" id="np-video">
+      </div>
+      <button class="btn btn-primary" id="publishBtn">Publish</button>
+    </div>
+
+    <div class="admin-card">
+      <h2>Published posts</h2>
+      <div id="adminPostList"></div>
+    </div>
+
+    <div class="admin-card">
+      <h2>Inbox</h2>
+      <div id="adminInbox"></div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../js/data.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

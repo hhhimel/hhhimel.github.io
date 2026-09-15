@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" width="120" height="140" aria-hidden="true">
+  <style>
+    .soil { fill: #8B5E3C; opacity: 0.85; }
+    .stem {
+      fill: none; stroke: #2d5a3d; stroke-width: 3; stroke-linecap: round;
+      stroke-dasharray: 50; stroke-dashoffset: 50;
+      animation: grow-stem 1.4s ease-out 0.3s forwards;
+    }
+    .leaf-l {
+      fill: #3d7a4a;
+      transform-origin: 58px 78px;
+      opacity: 0;
+      animation: unfurl-l 0.9s ease-out 1.2s forwards;
+    }
+    .leaf-r {
+      fill: #4a9a5c;
+      transform-origin: 62px 72px;
+      opacity: 0;
+      animation: unfurl-r 0.9s ease-out 1.4s forwards;
+    }
+    .seed {
+      fill: #C4A35A;
+      animation: seed-pulse 2.4s ease-in-out 2.2s infinite;
+    }
+    .sprout-glow {
+      fill: #C4A35A; opacity: 0;
+      animation: glow 2.4s ease-in-out 2.2s infinite;
+    }
+    @keyframes grow-stem {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes unfurl-l {
+      from { opacity: 0; transform: scale(0.2) rotate(-40deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    @keyframes unfurl-r {
+      from { opacity: 0; transform: scale(0.2) rotate(40deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    @keyframes seed-pulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+    @keyframes glow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.15; }
+    }
+  </style>
+  <!-- soil mound -->
+  <ellipse class="soil" cx="60" cy="118" rx="38" ry="10"/>
+  <ellipse class="soil" cx="60" cy="114" rx="28" ry="7" opacity="0.5"/>
+  <!-- soft glow -->
+  <circle class="sprout-glow" cx="60" cy="70" r="36"/>
+  <!-- stem -->
+  <path class="stem" d="M60 112 C60 100 58 88 60 72"/>
+  <!-- left leaf -->
+  <path class="leaf-l" d="M60 78 C48 70 38 58 42 48 C52 52 58 64 60 78Z"/>
+  <!-- right leaf -->
+  <path class="leaf-r" d="M60 72 C72 62 84 52 88 44 C78 48 66 58 60 72Z"/>
+  <!-- seed at base -->
+  <ellipse class="seed" cx="60" cy="112" rx="5" ry="3.5"/>
+</svg>
