@@ -45,7 +45,7 @@ After that, every visitor loads journal data from the cloud bin.
 
 ## Admin passphrase
 
-`pswd.admin` — change in `js/admin.js` if you want.
+`****` — change in `js/admin.js` if you want.
 
 ## Deploy (GitHub Pages)
 
